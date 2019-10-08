@@ -281,7 +281,7 @@ func TestPingFunc(t *testing.T) {
 	for i, cc := range cases {
 		err := cc.redis.Ping()
 		switch i {
-		case 1:
+		case 0:
 			if err != nil && cc.err != nil {
 				t.Errorf("Case %d, expected no erros, but got %v", i, err)
 			}

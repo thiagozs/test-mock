@@ -3,24 +3,11 @@ package dbs
 import (
 	"log"
 
+	"github.com/alicebob/miniredis"
 	"github.com/go-redis/cache"
 	"github.com/go-redis/redis"
 	"github.com/vmihailenco/msgpack/v4"
 )
-
-type RedisClient interface {
-	Ping() error
-	QueueSet(queue string, json string) error
-	QueueGet(queue string) (string, error)
-	QueueRangeList(queue string, start int64, end int64) ([]string, error)
-	QueueTrim(queue string, start int64, end int64) (string, error)
-	QueueGetList(queue string, amount int) ([]string, error)
-	QueueSize(queue string) (int, error)
-	Incr(key string) (int, error)
-	Decr(key string) (int, error)
-	Del(key string) (int, error)
-	Get(key string) (string, error)
-}
 
 // Dispatch of dbs
 type Dispatch struct {
@@ -31,6 +18,37 @@ type Dispatch struct {
 //RedisObject string
 type RedisObject struct {
 	Message []byte
+}
+
+// NewTestRedis mock
+func NewTestRedis() (*Dispatch, error) {
+	mr, err := miniredis.Run()
+	if err != nil {
+		panic(err)
+	}
+	client := redis.NewClient(&redis.Options{
+		Addr: mr.Addr(),
+	})
+
+	codec := &cache.Codec{
+		Redis: client,
+
+		Marshal: func(v interface{}) ([]byte, error) {
+			return msgpack.Marshal(v)
+		},
+		Unmarshal: func(b []byte, v interface{}) error {
+			return msgpack.Unmarshal(b, v)
+		},
+	}
+
+	_, err = client.Ping().Result()
+	if err != nil {
+		return &Dispatch{}, err
+
+	}
+
+	return &Dispatch{client, codec}, nil
+
 }
 
 // NewRedis connection with redis key value

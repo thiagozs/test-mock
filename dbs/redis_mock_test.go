@@ -1,4 +1,4 @@
-package dbs
+package dbs_test
 
 import "fmt"
 
@@ -89,6 +89,7 @@ func (m *MockRedisClient) Del(key string) (int, error) {
 
 func (m *MockRedisClient) Get(key string) (string, error) {
 	if m.GetFunc != nil {
+		//return key, nil
 		return m.GetFunc(key)
 	}
 	return "", fmt.Errorf("Get %s Error", key)

@@ -1,0 +1,4 @@
+go get -u -v github.com/golang/mock/gomock
+go install -v github.com/golang/mock/mockgen
+
+mockgen -package mocks -destination mocks/redis.go -source dbs/redis.go DispatchServices

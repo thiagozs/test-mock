@@ -6,7 +6,7 @@ import (
 	"github.com/vmihailenco/msgpack/v4"
 )
 
-type DispatchServices interface {
+type DispatchRepository interface {
 	Ping() error
 	QueueSet(queue, json string) error
 	QueueGet(queue string) (string, error)
@@ -20,12 +20,7 @@ type DispatchServices interface {
 	Get(key string) (string, error)
 }
 
-type dispatchServices struct {
-	dispatch *Dispatch
-}
-
-// Dispatch of dbs
-type Dispatch struct {
+type dispatchRepository struct {
 	Redis *redis.Client
 	Cache *cache.Codec
 }
@@ -36,7 +31,7 @@ type RedisObject struct {
 }
 
 // NewTestRedis mock
-func NewRedis() DispatchServices {
+func NewRedis() DispatchRepository {
 	client := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "",
@@ -54,12 +49,12 @@ func NewRedis() DispatchServices {
 		},
 	}
 
-	return &dispatchServices{&Dispatch{client, codec}}
+	return &dispatchRepository{client, codec}
 }
 
 // Ping ping server
-func (d *dispatchServices) Ping() error {
-	_, err := d.dispatch.Redis.Ping().Result()
+func (d *dispatchRepository) Ping() error {
+	_, err := d.Redis.Ping().Result()
 	if err != nil {
 		return err
 	}
@@ -67,8 +62,8 @@ func (d *dispatchServices) Ping() error {
 }
 
 //QueueSet set item queue
-func (d *dispatchServices) QueueSet(queue string, json string) error {
-	err := d.dispatch.Redis.RPush(queue, json).Err()
+func (d *dispatchRepository) QueueSet(queue string, json string) error {
+	err := d.Redis.RPush(queue, json).Err()
 	if err != nil {
 		return err
 	}
@@ -76,8 +71,8 @@ func (d *dispatchServices) QueueSet(queue string, json string) error {
 }
 
 // QueueGet get queue item
-func (d *dispatchServices) QueueGet(queue string) (string, error) {
-	result, err := d.dispatch.Redis.LPop(queue).Result()
+func (d *dispatchRepository) QueueGet(queue string) (string, error) {
+	result, err := d.Redis.LPop(queue).Result()
 	if err != nil {
 		return "", err
 	}
@@ -85,8 +80,8 @@ func (d *dispatchServices) QueueGet(queue string) (string, error) {
 }
 
 // QueueRangeList get queue item
-func (d *dispatchServices) QueueRangeList(queue string, start, end int64) ([]string, error) {
-	result, err := d.dispatch.Redis.LRange(queue, start, end).Result()
+func (d *dispatchRepository) QueueRangeList(queue string, start, end int64) ([]string, error) {
+	result, err := d.Redis.LRange(queue, start, end).Result()
 	if err != nil {
 		return []string{}, err
 	}
@@ -94,8 +89,8 @@ func (d *dispatchServices) QueueRangeList(queue string, start, end int64) ([]str
 }
 
 // QueueTrim remove item from queue
-func (d *dispatchServices) QueueTrim(queue string, start, end int64) (string, error) {
-	result, err := d.dispatch.Redis.LTrim(queue, start, end).Result()
+func (d *dispatchRepository) QueueTrim(queue string, start, end int64) (string, error) {
+	result, err := d.Redis.LTrim(queue, start, end).Result()
 	if err != nil {
 		return "", err
 	}
@@ -103,7 +98,7 @@ func (d *dispatchServices) QueueTrim(queue string, start, end int64) (string, er
 }
 
 // QueueGetList list of item
-func (d *dispatchServices) QueueGetList(queue string, amount int) ([]string, error) {
+func (d *dispatchRepository) QueueGetList(queue string, amount int) ([]string, error) {
 	result := []string{}
 	for i := 0; i < amount; i++ {
 		data, err := d.QueueGet(queue)
@@ -116,8 +111,8 @@ func (d *dispatchServices) QueueGetList(queue string, amount int) ([]string, err
 }
 
 // QueueSize length of queue
-func (d *dispatchServices) QueueSize(queue string) (int, error) {
-	result, err := d.dispatch.Redis.LLen(queue).Result()
+func (d *dispatchRepository) QueueSize(queue string) (int, error) {
+	result, err := d.Redis.LLen(queue).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -125,8 +120,8 @@ func (d *dispatchServices) QueueSize(queue string) (int, error) {
 }
 
 // Incr key
-func (d *dispatchServices) Incr(key string) (int, error) {
-	result, err := d.dispatch.Redis.Incr(key).Result()
+func (d *dispatchRepository) Incr(key string) (int, error) {
+	result, err := d.Redis.Incr(key).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -134,8 +129,8 @@ func (d *dispatchServices) Incr(key string) (int, error) {
 }
 
 // Decr key
-func (d *dispatchServices) Decr(key string) (int, error) {
-	result, err := d.dispatch.Redis.Decr(key).Result()
+func (d *dispatchRepository) Decr(key string) (int, error) {
+	result, err := d.Redis.Decr(key).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -143,8 +138,8 @@ func (d *dispatchServices) Decr(key string) (int, error) {
 }
 
 // Del key
-func (d *dispatchServices) Del(key string) (int, error) {
-	result, err := d.dispatch.Redis.Del(key).Result()
+func (d *dispatchRepository) Del(key string) (int, error) {
+	result, err := d.Redis.Del(key).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -152,8 +147,8 @@ func (d *dispatchServices) Del(key string) (int, error) {
 }
 
 // Get key
-func (d *dispatchServices) Get(key string) (string, error) {
-	result, err := d.dispatch.Redis.Get(key).Result()
+func (d *dispatchRepository) Get(key string) (string, error) {
+	result, err := d.Redis.Get(key).Result()
 	if err != nil {
 		return "", err
 	}

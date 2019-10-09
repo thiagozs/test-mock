@@ -9,31 +9,31 @@ import (
 	reflect "reflect"
 )
 
-// MockDispatchServices is a mock of DispatchServices interface
-type MockDispatchServices struct {
+// MockDispatchRepository is a mock of DispatchRepository interface
+type MockDispatchRepository struct {
 	ctrl     *gomock.Controller
-	recorder *MockDispatchServicesMockRecorder
+	recorder *MockDispatchRepositoryMockRecorder
 }
 
-// MockDispatchServicesMockRecorder is the mock recorder for MockDispatchServices
-type MockDispatchServicesMockRecorder struct {
-	mock *MockDispatchServices
+// MockDispatchRepositoryMockRecorder is the mock recorder for MockDispatchRepository
+type MockDispatchRepositoryMockRecorder struct {
+	mock *MockDispatchRepository
 }
 
-// NewMockDispatchServices creates a new mock instance
-func NewMockDispatchServices(ctrl *gomock.Controller) *MockDispatchServices {
-	mock := &MockDispatchServices{ctrl: ctrl}
-	mock.recorder = &MockDispatchServicesMockRecorder{mock}
+// NewMockDispatchRepository creates a new mock instance
+func NewMockDispatchRepository(ctrl *gomock.Controller) *MockDispatchRepository {
+	mock := &MockDispatchRepository{ctrl: ctrl}
+	mock.recorder = &MockDispatchRepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockDispatchServices) EXPECT() *MockDispatchServicesMockRecorder {
+func (m *MockDispatchRepository) EXPECT() *MockDispatchRepositoryMockRecorder {
 	return m.recorder
 }
 
 // Ping mocks base method
-func (m *MockDispatchServices) Ping() error {
+func (m *MockDispatchRepository) Ping() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Ping")
 	ret0, _ := ret[0].(error)
@@ -41,13 +41,13 @@ func (m *MockDispatchServices) Ping() error {
 }
 
 // Ping indicates an expected call of Ping
-func (mr *MockDispatchServicesMockRecorder) Ping() *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) Ping() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Ping", reflect.TypeOf((*MockDispatchServices)(nil).Ping))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Ping", reflect.TypeOf((*MockDispatchRepository)(nil).Ping))
 }
 
 // QueueSet mocks base method
-func (m *MockDispatchServices) QueueSet(queue, json string) error {
+func (m *MockDispatchRepository) QueueSet(queue, json string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueSet", queue, json)
 	ret0, _ := ret[0].(error)
@@ -55,13 +55,13 @@ func (m *MockDispatchServices) QueueSet(queue, json string) error {
 }
 
 // QueueSet indicates an expected call of QueueSet
-func (mr *MockDispatchServicesMockRecorder) QueueSet(queue, json interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueSet(queue, json interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueSet", reflect.TypeOf((*MockDispatchServices)(nil).QueueSet), queue, json)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueSet", reflect.TypeOf((*MockDispatchRepository)(nil).QueueSet), queue, json)
 }
 
 // QueueGet mocks base method
-func (m *MockDispatchServices) QueueGet(queue string) (string, error) {
+func (m *MockDispatchRepository) QueueGet(queue string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueGet", queue)
 	ret0, _ := ret[0].(string)
@@ -70,13 +70,13 @@ func (m *MockDispatchServices) QueueGet(queue string) (string, error) {
 }
 
 // QueueGet indicates an expected call of QueueGet
-func (mr *MockDispatchServicesMockRecorder) QueueGet(queue interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueGet(queue interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueGet", reflect.TypeOf((*MockDispatchServices)(nil).QueueGet), queue)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueGet", reflect.TypeOf((*MockDispatchRepository)(nil).QueueGet), queue)
 }
 
 // QueueRangeList mocks base method
-func (m *MockDispatchServices) QueueRangeList(queue string, start, end int64) ([]string, error) {
+func (m *MockDispatchRepository) QueueRangeList(queue string, start, end int64) ([]string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueRangeList", queue, start, end)
 	ret0, _ := ret[0].([]string)
@@ -85,13 +85,13 @@ func (m *MockDispatchServices) QueueRangeList(queue string, start, end int64) ([
 }
 
 // QueueRangeList indicates an expected call of QueueRangeList
-func (mr *MockDispatchServicesMockRecorder) QueueRangeList(queue, start, end interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueRangeList(queue, start, end interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueRangeList", reflect.TypeOf((*MockDispatchServices)(nil).QueueRangeList), queue, start, end)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueRangeList", reflect.TypeOf((*MockDispatchRepository)(nil).QueueRangeList), queue, start, end)
 }
 
 // QueueTrim mocks base method
-func (m *MockDispatchServices) QueueTrim(queue string, start, end int64) (string, error) {
+func (m *MockDispatchRepository) QueueTrim(queue string, start, end int64) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueTrim", queue, start, end)
 	ret0, _ := ret[0].(string)
@@ -100,13 +100,13 @@ func (m *MockDispatchServices) QueueTrim(queue string, start, end int64) (string
 }
 
 // QueueTrim indicates an expected call of QueueTrim
-func (mr *MockDispatchServicesMockRecorder) QueueTrim(queue, start, end interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueTrim(queue, start, end interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueTrim", reflect.TypeOf((*MockDispatchServices)(nil).QueueTrim), queue, start, end)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueTrim", reflect.TypeOf((*MockDispatchRepository)(nil).QueueTrim), queue, start, end)
 }
 
 // QueueGetList mocks base method
-func (m *MockDispatchServices) QueueGetList(queue string, amount int) ([]string, error) {
+func (m *MockDispatchRepository) QueueGetList(queue string, amount int) ([]string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueGetList", queue, amount)
 	ret0, _ := ret[0].([]string)
@@ -115,13 +115,13 @@ func (m *MockDispatchServices) QueueGetList(queue string, amount int) ([]string,
 }
 
 // QueueGetList indicates an expected call of QueueGetList
-func (mr *MockDispatchServicesMockRecorder) QueueGetList(queue, amount interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueGetList(queue, amount interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueGetList", reflect.TypeOf((*MockDispatchServices)(nil).QueueGetList), queue, amount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueGetList", reflect.TypeOf((*MockDispatchRepository)(nil).QueueGetList), queue, amount)
 }
 
 // QueueSize mocks base method
-func (m *MockDispatchServices) QueueSize(queue string) (int, error) {
+func (m *MockDispatchRepository) QueueSize(queue string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "QueueSize", queue)
 	ret0, _ := ret[0].(int)
@@ -130,13 +130,13 @@ func (m *MockDispatchServices) QueueSize(queue string) (int, error) {
 }
 
 // QueueSize indicates an expected call of QueueSize
-func (mr *MockDispatchServicesMockRecorder) QueueSize(queue interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) QueueSize(queue interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueSize", reflect.TypeOf((*MockDispatchServices)(nil).QueueSize), queue)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueueSize", reflect.TypeOf((*MockDispatchRepository)(nil).QueueSize), queue)
 }
 
 // Incr mocks base method
-func (m *MockDispatchServices) Incr(key string) (int, error) {
+func (m *MockDispatchRepository) Incr(key string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Incr", key)
 	ret0, _ := ret[0].(int)
@@ -145,13 +145,13 @@ func (m *MockDispatchServices) Incr(key string) (int, error) {
 }
 
 // Incr indicates an expected call of Incr
-func (mr *MockDispatchServicesMockRecorder) Incr(key interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) Incr(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockDispatchServices)(nil).Incr), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockDispatchRepository)(nil).Incr), key)
 }
 
 // Decr mocks base method
-func (m *MockDispatchServices) Decr(key string) (int, error) {
+func (m *MockDispatchRepository) Decr(key string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Decr", key)
 	ret0, _ := ret[0].(int)
@@ -160,13 +160,13 @@ func (m *MockDispatchServices) Decr(key string) (int, error) {
 }
 
 // Decr indicates an expected call of Decr
-func (mr *MockDispatchServicesMockRecorder) Decr(key interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) Decr(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decr", reflect.TypeOf((*MockDispatchServices)(nil).Decr), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decr", reflect.TypeOf((*MockDispatchRepository)(nil).Decr), key)
 }
 
 // Del mocks base method
-func (m *MockDispatchServices) Del(key string) (int, error) {
+func (m *MockDispatchRepository) Del(key string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Del", key)
 	ret0, _ := ret[0].(int)
@@ -175,13 +175,13 @@ func (m *MockDispatchServices) Del(key string) (int, error) {
 }
 
 // Del indicates an expected call of Del
-func (mr *MockDispatchServicesMockRecorder) Del(key interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) Del(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Del", reflect.TypeOf((*MockDispatchServices)(nil).Del), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Del", reflect.TypeOf((*MockDispatchRepository)(nil).Del), key)
 }
 
 // Get mocks base method
-func (m *MockDispatchServices) Get(key string) (string, error) {
+func (m *MockDispatchRepository) Get(key string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", key)
 	ret0, _ := ret[0].(string)
@@ -190,7 +190,7 @@ func (m *MockDispatchServices) Get(key string) (string, error) {
 }
 
 // Get indicates an expected call of Get
-func (mr *MockDispatchServicesMockRecorder) Get(key interface{}) *gomock.Call {
+func (mr *MockDispatchRepositoryMockRecorder) Get(key interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockDispatchServices)(nil).Get), key)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockDispatchRepository)(nil).Get), key)
 }

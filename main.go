@@ -7,10 +7,13 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello")
+	fmt.Println("Hello Redis Mock")
 
-	_, err := dbs.NewRedis()
-	if err != nil {
-		panic(err)
+	redis := dbs.NewRedis()
+
+	if err := redis.Ping(); err != nil {
+		fmt.Println(err)
 	}
+
+	fmt.Println("Done")
 }

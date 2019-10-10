@@ -1,16 +1,9 @@
-pipeline:
+kind: pipeline
+name: default
 
-  build_always:
-    image: alpine
-    commands:
-      - echo "hello always"
-
-  build_sometimes:
-    image: alpine
-    commands:
-      - echo "hello sometimes"
-  # When incorrectly formatted like this, error message in 0.85 is "Invalid or missing image"
-  when:
-      status: [ success ]
-      event: push
-      branch: master
+steps:
+- name: test
+  image: golang
+  commands:
+  - go test
+  - go build

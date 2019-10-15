@@ -16,14 +16,14 @@ steps:
     commands:
       - go get github.com/golangci/golangci-lint/cmd/golangci-lint
       - go get github.com/reviewdog/reviewdog/cmd/reviewdog
-      - go get honnef.co/go/tools/cmd/unused
+      - go get github.com/gostaticanalysis/unused/cmd/unused
       - go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
       - |
         go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-check" -f=govet -ci=droneio
       - |
         golangci-lint run | reviewdog -reporter="github-check" -f=golangci-lint -ci=droneio
       - |
-        unused ./... | reviewdog -efm="%f:%l:%c: %m" -ci=droneio
+        go vet -vettool=$(which unused) pkgname | reviewdog -efm="%f:%l:%c: %m" -ci=droneio
     when:
       event:
        - push

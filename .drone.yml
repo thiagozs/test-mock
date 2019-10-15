@@ -14,9 +14,9 @@ steps:
       REVIEWDOG_GITHUB_API_TOKEN:
         from_secret: github_token
     commands:
-      - go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-      - go get -u github.com/haya14busa/reviewdog/cmd/reviewdog
-      - go get -u honnef.co/go/tools/cmd/unused
+      - go get github.com/golangci/golangci-lint/cmd/golangci-lint
+      - go get github.com/reviewdog/reviewdog/cmd/reviewdog
+      - go get honnef.co/go/tools/cmd/unused
       - go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
       - |
         go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-check" -f=govet -ci=droneio

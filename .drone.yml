@@ -10,7 +10,8 @@ steps:
   - lint:
     image: golang
     environment:
-      - REVIEWDOG_GITHUB_API_TOKEN= ${{ secrets.github_token }}
+      REVIEWDOG_GITHUB_API_TOKEN:
+        from_secret: github_token
     commands:
       - go get github.com/haya14busa/reviewdog/cmd/reviewdog
       - go get github.com/golang/lint/golint

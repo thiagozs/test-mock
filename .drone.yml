@@ -7,7 +7,7 @@ steps:
     commands:
       - go get -d -v -t ./...
       - go test -v ./...
-  - lint:
+  - name: lint
     image: golang
     environment:
       REVIEWDOG_GITHUB_API_TOKEN:

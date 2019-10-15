@@ -13,13 +13,14 @@ steps:
       REVIEWDOG_GITHUB_API_TOKEN:
         from_secret: github_token
     commands:
+      - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.21.0
       - go get github.com/haya14busa/reviewdog/cmd/reviewdog
-      - go get github.com/golang/lint/golint
       - go get honnef.co/go/tools/cmd/unused
+      - go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
       - |
-        go tool vet -all -shadowstrict . 2>&1 | reviewdog -reporter="github-check" -f=govet -ci=droneio
+        go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-check" -f=govet -ci=droneio
       - |
-        golint ./... | reviewdog -reporter="github-check" -f=golint -ci=droneio
+        golangci-lint run | reviewdog -reporter="github-check" -f=golangci-lint -ci=droneio
       - |
         unused ./... | reviewdog -efm="%f:%l:%c: %m" -ci=droneio
     when:

@@ -1,10 +1,13 @@
-build:
-  test:
+kind: pipeline
+name: default
+
+steps:
+  - name: test
     image: golang
     commands:
       - go get -d -v -t ./...
       - go test -v ./...
-  lint:
+  - lint:
     image: golang
     environment:
       - REVIEWDOG_GITHUB_API_TOKEN=$$REVIEWDOG_GITHUB_API_TOKEN

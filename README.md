@@ -30,4 +30,4 @@ We use SemVer for versioning. You can see the versions available by checking the
 
 For more details about our license model, please take a look at the LICENSE.md file.
 
-2019, thiagozs.
+*****2019**, thiagozs.

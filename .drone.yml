@@ -13,6 +13,7 @@ steps:
     environment:
       REVIEWDOG_GITHUB_API_TOKEN:
         from_secret: github_token
+      REVIEWDOG_TOKEN: a66e9032d2a2ccbd
     commands:
       - go get github.com/golangci/golangci-lint/cmd/golangci-lint
       - go get github.com/reviewdog/reviewdog/cmd/reviewdog

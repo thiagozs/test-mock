@@ -5,7 +5,7 @@ steps:
   - name: test
     image: golang
     commands:
-      - go get -d -v -t ./...
+      - go get -d -t ./...
       - go test -v ./...
  
   - name: lint
@@ -22,8 +22,8 @@ steps:
         go vet -vettool=$(which shadow) . 2>&1 | reviewdog -f=govet -diff="git diff" 
       - |
         golangci-lint run --fast | reviewdog -f=golangci-lint -diff="git diff"
-      - |
-        go vet -vettool=$(which unused) dbs | reviewdog -efm="%f:%l:%c: %m" -diff="git diff" 
+      #- |
+      #  go vet -vettool=$(which unused) dbs | reviewdog -efm="%f:%l:%c: %m" -diff="git diff" 
     when:
       event:
        - push

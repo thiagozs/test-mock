@@ -16,4 +16,5 @@ require (
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v4 v4.2.0
 	github.com/yuin/gopher-lua v0.0.0-20190514113301-1cd887cd7036 // indirect
+	golang.org/x/tools v0.0.0-20191121172411-96ad48e4b060 // indirect
 )

@@ -23,7 +23,7 @@ steps:
       - |
         golangci-lint run --fast | reviewdog -f=golangci-lint -diff="git diff"
       - |
-        go vet -vettool=$(which unused) pkgname | reviewdog -efm="%f:%l:%c: %m" -diff="git diff" 
+        go vet -vettool=$(which unused) dbs | reviewdog -efm="%f:%l:%c: %m" -diff="git diff" 
     when:
       event:
        - push

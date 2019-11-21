@@ -19,9 +19,9 @@ steps:
       - go get github.com/gostaticanalysis/unused/cmd/unused
       - go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
       - |
-        go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-check" -f=govet 
+        go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-pr-check" -f=govet 
       - |
-        golangci-lint run --fast | reviewdog -reporter="github-check" -f=golangci-lint 
+        golangci-lint run --fast | reviewdog -reporter="github-pr-check" -f=golangci-lint 
       - |
         go vet -vettool=$(which unused) pkgname | reviewdog -efm="%f:%l:%c: %m" 
     when:

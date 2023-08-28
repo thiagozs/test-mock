@@ -2,8 +2,43 @@ kind: pipeline
 name: default
 
 steps:
-- name: test
-  image: golang
-  commands:
-  - go test -v ./...
-  - go build
+  - name: test
+    image: golang
+    commands:
+      - go get -d -t ./...
+      - go test -v ./...
+ 
+  - name: lint
+    image: golang
+    environment:
+      REVIEWDOG_GITHUB_API_TOKEN:
+        from_secret: github_token
+      REVIEWDOG_TOKEN:
+        from_secret: reviewdog_token
+    commands:
+      - go get github.com/golangci/golangci-lint/cmd/golangci-lint
+      - go get github.com/reviewdog/reviewdog/cmd/reviewdog
+      - go get github.com/gostaticanalysis/unused/cmd/unused
+      - go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+      - |
+        go vet -vettool=$(which shadow) . 2>&1 | reviewdog -reporter="github-pr-check" -f=govet -diff="git diff" 
+      - |
+        golangci-lint run --fast | reviewdog -reporter="github-pr-check" -f=golangci-lint -diff="git diff"
+      #- |
+      #  go vet -vettool=$(which unused) dbs | reviewdog -efm="%f:%l:%c: %m" -diff="git diff" 
+    when:
+      event:
+       #- push
+       #- tag
+       - pull_request
+
+
+# kind: pipeline
+# name: default
+
+# steps:
+# - name: test
+#   image: golang
+#   commands:
+#   - go test -v ./...
+#   - go build
